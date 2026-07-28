@@ -1,0 +1,17 @@
+# VS Code (Configurações locais e histórico)
+.vscode/
+.history/
+*.code-workspace
+
+# Arquivos do Sistema Operacional Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Logs de Erros
+*.log
+
+# Backups e Arquivos Temporários do Windows/Editores
+*.tmp
+*.bak
+*.swp
