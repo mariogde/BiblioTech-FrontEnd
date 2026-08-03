@@ -1,0 +1,164 @@
+:root {
+  --color-bg-page: #f6f4ef;
+  --color-bg-surface: #ffffff;
+  --color-bg-input: #e4e3e0;
+  --color-bg-input-focus: #d9d8d4;
+
+  --color-text-primary: #1c1c1a;
+  --color-text-secondary: #5c5b57;
+
+  --color-accent: #3f6650;
+  --color-accent-hover: #345544;
+  --color-accent-soft: #e7efe9;
+
+  --color-danger: #b3412f;
+  --color-danger-bg: #fbe9e6;
+
+  --font-base: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --radius-sm: 4px;
+  --radius-lg: 12px;
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-base);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-page);
+  line-height: 1.5;
+}
+
+/* Página de login: centraliza o cartão na tela */
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 380px;
+  background-color: var(--color-bg-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 2rem 1.5rem;
+}
+
+.login-card__brand {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 0 2rem;
+}
+
+.login-form__group {
+  margin-bottom: 1rem;
+}
+
+.login-form__label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.login-form__input {
+  width: 100%;
+  border: 1px solid transparent;
+  background-color: var(--color-bg-input);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.login-form__input:focus {
+  outline: none;
+  background-color: var(--color-bg-input-focus);
+  border-color: var(--color-accent);
+}
+
+.login-form__input[aria-invalid="true"] {
+  border-color: var(--color-danger);
+  background-color: var(--color-danger-bg);
+}
+
+.login-form__error {
+  display: block;
+  min-height: 1.1em;
+  color: var(--color-danger);
+  font-size: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.login-form__submit {
+  width: 100%;
+  border: none;
+  background-color: var(--color-accent);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background-color 150ms ease;
+}
+
+.login-form__submit:hover {
+  background-color: var(--color-accent-hover);
+}
+
+.login-form__submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.login-card__links {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  font-size: 0.875rem;
+}
+
+.login-card__links a {
+  color: var(--color-text-secondary);
+  text-decoration: underline;
+}
+
+.login-card__links a:hover {
+  color: var(--color-text-primary);
+}
+
+.login-feedback {
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  display: none;
+}
+
+.login-feedback[data-state="error"] {
+  display: block;
+  background-color: var(--color-danger-bg);
+  color: var(--color-danger);
+}
+
+.login-feedback[data-state="success"] {
+  display: block;
+  background-color: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+
+/* Responsivo: telas muito estreitas reduzem o padding do cartão */
+@media (max-width: 360px) {
+  .login-card {
+    padding: 1.5rem 1rem;
+  }
+}
