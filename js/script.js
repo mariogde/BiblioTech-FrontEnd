@@ -1,84 +1,79 @@
-const form = document.getElementById("login-form");
-const emailInput = document.getElementById("email");
-const passwordInput = document.getElementById("password");
-const emailError = document.getElementById("email-error");
-const passwordError = document.getElementById("password-error");
-const feedback = document.getElementById("login-feedback");
+const formulario = document.getElementById("formulario-login");
+const campoEmail = document.getElementById("email");
+const campoSenha = document.getElementById("senha");
+const erroEmail = document.getElementById("erro-email");
+const erroSenha = document.getElementById("erro-senha");
+const retorno = document.getElementById("retorno-login");
 
-//utilizando regex
-function isValidEmail(value) {
-  const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return pattern.test(value.trim());
-}
-
-function setFieldError(input, errorEl, message) {
-  if (message) {
-    input.setAttribute("aria-invalid", "true");
-    errorEl.textContent = message;
+function setFieldError(campo, elementoErro, mensagem) {
+  if (mensagem) {
+    campo.setAttribute("aria-invalid", "true");
+    elementoErro.textContent = mensagem;
   } else {
-    input.removeAttribute("aria-invalid");
-    errorEl.textContent = "";
+    campo.removeAttribute("aria-invalid");
+    elementoErro.textContent = "";
   }
 }
 
-function showFeedback(message, state) {
-  feedback.textContent = message;
-  feedback.dataset.state = state;
+function showFeedback(mensagem, estado) {
+  retorno.textContent = mensagem;
+  retorno.dataset.state = estado;
 }
 
 function clearFeedback() {
-  feedback.textContent = "";
-  feedback.removeAttribute("data-state");
+  retorno.textContent = "";
+  retorno.removeAttribute("data-state");
 }
 
 function validate() {
-  let isValid = true;
+  let valido = true;
 
-  const email = emailInput.value.trim();
-  if (!email) {
-    setFieldError(emailInput, emailError, "Informe seu e-mail.");
-    isValid = false;
-  } else if (!isValidEmail(email)) {
-    setFieldError(emailInput, emailError, "Informe um e-mail válido.");
-    isValid = false;
+  const email = campoEmail.value;
+  if (!email.trim()) {
+    setFieldError(campoEmail, erroEmail, "Informe seu e-mail.");
+    valido = false;
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+    setFieldError(campoEmail, erroEmail, "Informe um e-mail válido.");
+    valido = false;
   } else {
-    setFieldError(emailInput, emailError, "");
+    setFieldError(campoEmail, erroEmail, "");
   }
 
-  const password = passwordInput.value.trim();
-  if (!password) {
-    setFieldError(passwordInput, passwordError, "Informe sua senha.");
-    isValid = false;
-  } else if (password.length < 8) {
-    setFieldError(passwordInput, passwordError, "A senha deve ter ao menos 8 caracteres.");
-    isValid = false;
+  const senha = campoSenha.value;
+  if (!senha.trim()) {
+    setFieldError(campoSenha, erroSenha, "Informe sua senha.");
+    valido = false;
+  } else if (senha.trim().length < 6) {
+    setFieldError(campoSenha, erroSenha, "A senha deve ter ao menos 6 caracteres.");
+    valido = false;
   } else {
-    setFieldError(passwordInput, passwordError, "");
+    setFieldError(campoSenha, erroSenha, "");
   }
 
-  return isValid;
+  return valido;
 }
 
-form.addEventListener("submit", function (event) {
+formulario.addEventListener("submit", function (event) {
   event.preventDefault();
   clearFeedback();
 
   if (!validate()) {
-    showFeedback("E-mail ou senha incorretos.", "error");
+    showFeedback("Corrija os campos destacados antes de continuar.", "erro");
     return;
   }
 
-  const submitButton = form.querySelector(".login-form__submit");
-  submitButton.disabled = true;
-  submitButton.textContent = "Entrando...";
+  const botaoEnviar = document.getElementById("botao-entrar");
+  botaoEnviar.disabled = true;
+  botaoEnviar.textContent = "Entrando...";
 
   setTimeout(function () {
-    showFeedback("Login realizado com sucesso! Redirecionando...", "success");
+    showFeedback("Login realizado com sucesso! Redirecionando...", "sucesso");
 
-    window.localStorage.setItem(
-      "bibliosys:session",
-      JSON.stringify({ email: emailInput.value.trim(), loggedInAt: new Date().toISOString() })
-    );
+    // TODO: substituir por integração real com o backend quando disponível.
+    window.localStorage.setItem("bibliosys:session", JSON.stringify({
+      email: campoEmail.value.trim(),
+      loggedInAt: new Date().toISOString(),
+    }));
 
     setTimeout(function () {
       window.location.href = "dashboard.html";
@@ -86,11 +81,11 @@ form.addEventListener("submit", function (event) {
   }, 600);
 });
 
-[emailInput, passwordInput].forEach(function (input) {
-  input.addEventListener("input", function () {
-    if (input.getAttribute("aria-invalid") === "true") {
-      const errorEl = input === emailInput ? emailError : passwordError;
-      setFieldError(input, errorEl, "");
+[campoEmail, campoSenha].forEach(function (campo) {
+  campo.addEventListener("input", function () {
+    if (campo.getAttribute("aria-invalid") === "true") {
+      const elementoErro = campo === campoEmail ? erroEmail : erroSenha;
+      setFieldError(campo, elementoErro, "");
     }
   });
 });

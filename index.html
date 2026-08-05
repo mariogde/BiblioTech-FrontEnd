@@ -6,46 +6,46 @@
   <title>Entrar · BiblioTech</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
-<body class="login-page">
+<body class="pagina-autenticacao">
 
-  <main class="login-card">
-    <h1 class="login-card__brand">BiblioTech</h1>
+  <main class="cartao">
+    <h1 class="cartao__marca">BiblioTech</h1>
 
-    <div id="login-feedback" class="login-feedback" role="alert" aria-live="assertive"></div>
+    <div id="retorno-login" class="retorno" role="alert" aria-live="assertive"></div>
 
-    <form id="login-form" class="login-form" novalidate>
-      <div class="login-form__group">
-        <label for="email" class="login-form__label">E-mail</label>
+    <form id="formulario-login" novalidate>
+      <div class="formulario-grupo">
+        <label for="email" class="formulario-rotulo">E-mail</label>
         <input
           type="email"
           id="email"
           name="email"
-          class="login-form__input"
+          class="formulario-campo"
           autocomplete="username"
-          aria-describedby="email-error"
+          aria-describedby="erro-email"
           required
         />
-        <span id="email-error" class="login-form__error"></span>
+        <span id="erro-email" class="formulario-erro"></span>
       </div>
 
-      <div class="login-form__group">
-        <label for="password" class="login-form__label">Senha</label>
+      <div class="formulario-grupo">
+        <label for="senha" class="formulario-rotulo">Senha</label>
         <input
           type="password"
-          id="password"
-          name="password"
-          class="login-form__input"
+          id="senha"
+          name="senha"
+          class="formulario-campo"
           autocomplete="current-password"
-          aria-describedby="password-error"
+          aria-describedby="erro-senha"
           required
         />
-        <span id="password-error" class="login-form__error"></span>
+        <span id="erro-senha" class="formulario-erro"></span>
       </div>
 
-      <button type="submit" class="login-form__submit">Entrar</button>
+      <button type="submit" id="botao-entrar" class="botao botao--primario botao--bloco">Entrar</button>
     </form>
 
-    <nav class="login-card__links" aria-label="Ações da conta">
+    <nav class="cartao__links" aria-label="Ações da conta">
       <a href="register.html">Cadastre-se agora</a>
       <a href="forgot-password.html">Esqueci a senha</a>
     </nav>
