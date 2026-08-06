@@ -1,9 +1,9 @@
-const formulario = document.getElementById("formulario-login");
-const campoEmail = document.getElementById("email");
-const campoSenha = document.getElementById("senha");
-const erroEmail = document.getElementById("erro-email");
-const erroSenha = document.getElementById("erro-senha");
-const retorno = document.getElementById("retorno-login");
+const form = document.getElementById("formulario-login");
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("senha");
+const emailError = document.getElementById("erro-email");
+const passwordError = document.getElementById("erro-senha");
+const feedback = document.getElementById("retorno-login");
 
 function setFieldError(campo, elementoErro, mensagem) {
   if (mensagem) {
@@ -16,44 +16,44 @@ function setFieldError(campo, elementoErro, mensagem) {
 }
 
 function showFeedback(mensagem, estado) {
-  retorno.textContent = mensagem;
-  retorno.dataset.state = estado;
+  feedback.textContent = mensagem;
+  feedback.dataset.state = estado;
 }
 
 function clearFeedback() {
-  retorno.textContent = "";
-  retorno.removeAttribute("data-state");
+  feedback.textContent = "";
+  feedback.removeAttribute("data-state");
 }
 
 function validate() {
   let valido = true;
 
-  const email = campoEmail.value;
+  const email = emailInput.value;
   if (!email.trim()) {
-    setFieldError(campoEmail, erroEmail, "Informe seu e-mail.");
+    setFieldError(emailInput, emailError, "Informe seu e-mail.");
     valido = false;
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
-    setFieldError(campoEmail, erroEmail, "Informe um e-mail válido.");
+    setFieldError(emailInput, emailError, "Informe um e-mail válido.");
     valido = false;
   } else {
-    setFieldError(campoEmail, erroEmail, "");
+    setFieldError(emailInput, emailError, "");
   }
 
-  const senha = campoSenha.value;
-  if (!senha.trim()) {
-    setFieldError(campoSenha, erroSenha, "Informe sua senha.");
+  const password = passwordInput.value;
+  if (!password.trim()) {
+    setFieldError(passwordInput, passwordError, "Informe sua senha.");
     valido = false;
-  } else if (senha.trim().length < 6) {
-    setFieldError(campoSenha, erroSenha, "A senha deve ter ao menos 6 caracteres.");
+  } else if (password.trim().length < 6) {
+    setFieldError(passwordInput, passwordError, "A senha deve ter ao menos 6 caracteres.");
     valido = false;
   } else {
-    setFieldError(campoSenha, erroSenha, "");
+    setFieldError(passwordInput, passwordError, "");
   }
 
   return valido;
 }
 
-formulario.addEventListener("submit", function (event) {
+form.addEventListener("submit", function (event) {
   event.preventDefault();
   clearFeedback();
 
@@ -62,16 +62,15 @@ formulario.addEventListener("submit", function (event) {
     return;
   }
 
-  const botaoEnviar = document.getElementById("botao-entrar");
-  botaoEnviar.disabled = true;
-  botaoEnviar.textContent = "Entrando...";
+  const submitButton = document.getElementById("botao-entrar");
+  submitButton.disabled = true;
+  submitButton.textContent = "Entrando...";
 
   setTimeout(function () {
     showFeedback("Login realizado com sucesso! Redirecionando...", "sucesso");
 
-    // TODO: substituir por integração real com o backend quando disponível.
     window.localStorage.setItem("bibliosys:session", JSON.stringify({
-      email: campoEmail.value.trim(),
+      email: emailInput.value.trim(),
       loggedInAt: new Date().toISOString(),
     }));
 
@@ -81,11 +80,11 @@ formulario.addEventListener("submit", function (event) {
   }, 600);
 });
 
-[campoEmail, campoSenha].forEach(function (campo) {
+[emailInput, passwordInput].forEach(function (campo) {
   campo.addEventListener("input", function () {
     if (campo.getAttribute("aria-invalid") === "true") {
-      const elementoErro = campo === campoEmail ? erroEmail : erroSenha;
-      setFieldError(campo, elementoErro, "");
+      const errorElement = campo === emailInput ? emailError : passwordError;
+      setFieldError(campo, errorElement, "");
     }
   });
 });

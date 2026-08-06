@@ -1,22 +1,22 @@
-const formulario = document.getElementById("formulario-cadastro");
-const retorno = document.getElementById("retorno-cadastro");
+const form = document.getElementById("formulario-cadastro");
+const feedback = document.getElementById("retorno-cadastro");
 
-const campoNome = document.getElementById("nome");
-const campoEmail = document.getElementById("email");
-const campoCpf = document.getElementById("cpf");
-const campoDataNascimento = document.getElementById("data-nascimento");
-const campoTelefone = document.getElementById("telefone");
-const campoSenha = document.getElementById("senha");
-const campoConfirmarSenha = document.getElementById("confirmar-senha");
+const nameInput = document.getElementById("nome");
+const emailInput = document.getElementById("email");
+const cpfInput = document.getElementById("cpf");
+const birthdateInput = document.getElementById("data-nascimento");
+const phoneInput = document.getElementById("telefone");
+const passwordInput = document.getElementById("senha");
+const confirmPasswordInput = document.getElementById("confirmar-senha");
 
-const campos = [
-  { campo: campoNome, erro: document.getElementById("erro-nome") },
-  { campo: campoEmail, erro: document.getElementById("erro-email") },
-  { campo: campoCpf, erro: document.getElementById("erro-cpf") },
-  { campo: campoDataNascimento, erro: document.getElementById("erro-data-nascimento") },
-  { campo: campoTelefone, erro: document.getElementById("erro-telefone") },
-  { campo: campoSenha, erro: document.getElementById("erro-senha") },
-  { campo: campoConfirmarSenha, erro: document.getElementById("erro-confirmar-senha") },
+const fields = [
+  { campo: nameInput, erro: document.getElementById("erro-nome") },
+  { campo: emailInput, erro: document.getElementById("erro-email") },
+  { campo: cpfInput, erro: document.getElementById("erro-cpf") },
+  { campo: birthdateInput, erro: document.getElementById("erro-data-nascimento") },
+  { campo: phoneInput, erro: document.getElementById("erro-telefone") },
+  { campo: passwordInput, erro: document.getElementById("erro-senha") },
+  { campo: confirmPasswordInput, erro: document.getElementById("erro-confirmar-senha") },
 ];
 
 function maskCPF(valor) {
@@ -36,59 +36,60 @@ function maskPhone(valor) {
     .replace(/(\d{5})(\d{1,4})$/, "$1-$2");
 }
 
-campoCpf.addEventListener("input", function () {
-  campoCpf.value = maskCPF(campoCpf.value);
+cpfInput.addEventListener("input", function () {
+  cpfInput.value = maskCPF(cpfInput.value);
 });
 
-campoTelefone.addEventListener("input", function () {
-  campoTelefone.value = maskPhone(campoTelefone.value);
+phoneInput.addEventListener("input", function () {
+  phoneInput.value = maskPhone(phoneInput.value);
 });
+
 
 function isValidEmail(valor) {
-  const padrao = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return padrao.test(valor.trim());
+  const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return pattern.test(valor.trim());
 }
 
 function isValidCPF(valorBruto) {
-  const cpf = valorBruto.replace(/\D/g, "");
+  const digits = valorBruto.replace(/\D/g, "");
 
-  if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) {
+  if (digits.length !== 11 || /^(\d)\1{10}$/.test(digits)) {
     return false;
   }
 
   let soma = 0;
   for (let i = 0; i < 9; i++) {
-    soma += Number(cpf[i]) * (10 - i);
+    soma += Number(digits[i]) * (10 - i);
   }
   let digitoVerificador1 = (soma * 10) % 11;
   if (digitoVerificador1 === 10) digitoVerificador1 = 0;
-  if (digitoVerificador1 !== Number(cpf[9])) return false;
+  if (digitoVerificador1 !== Number(digits[9])) return false;
 
   soma = 0;
   for (let i = 0; i < 10; i++) {
-    soma += Number(cpf[i]) * (11 - i);
+    soma += Number(digits[i]) * (11 - i);
   }
   let digitoVerificador2 = (soma * 10) % 11;
   if (digitoVerificador2 === 10) digitoVerificador2 = 0;
-  return digitoVerificador2 === Number(cpf[10]);
+  return digitoVerificador2 === Number(digits[10]);
 }
 
 function isValidPhone(valor) {
-  const digitos = valor.replace(/\D/g, "");
-  return digitos.length === 10 || digitos.length === 11;
+  const digits = valor.replace(/\D/g, "");
+  return digits.length === 10 || digits.length === 11;
 }
 
 function isAdult(valorData) {
   if (!valorData) return false;
-  const dataNascimento = new Date(valorData);
-  if (Number.isNaN(dataNascimento.getTime()) || dataNascimento > new Date()) return false;
+  const birthDate = new Date(valorData);
+  if (Number.isNaN(birthDate.getTime()) || birthDate > new Date()) return false;
 
-  const hoje = new Date();
-  let idade = hoje.getFullYear() - dataNascimento.getFullYear();
-  const jaFezAniversarioEsteAno =
-    hoje.getMonth() > dataNascimento.getMonth() ||
-    (hoje.getMonth() === dataNascimento.getMonth() && hoje.getDate() >= dataNascimento.getDate());
-  if (!jaFezAniversarioEsteAno) idade -= 1;
+  const today = new Date();
+  let idade = today.getFullYear() - birthDate.getFullYear();
+  const hasHadBirthdayThisYear =
+    today.getMonth() > birthDate.getMonth() ||
+    (today.getMonth() === birthDate.getMonth() && today.getDate() >= birthDate.getDate());
+  if (!hasHadBirthdayThisYear) idade -= 1;
 
   return idade >= 16;
 }
@@ -104,92 +105,92 @@ function setFieldError(campo, elementoErro, mensagem) {
 }
 
 function showFeedback(mensagem, estado) {
-  retorno.textContent = mensagem;
-  retorno.dataset.state = estado;
+  feedback.textContent = mensagem;
+  feedback.dataset.state = estado;
 }
 
 function clearFeedback() {
-  retorno.textContent = "";
-  retorno.removeAttribute("data-state");
+  feedback.textContent = "";
+  feedback.removeAttribute("data-state");
 }
 
 function validate() {
   let valido = true;
 
-  if (!campoNome.value.trim()) {
-    setFieldError(campoNome, document.getElementById("erro-nome"), "Informe seu nome completo.");
+  if (!nameInput.value.trim()) {
+    setFieldError(nameInput, document.getElementById("erro-nome"), "Informe seu nome completo.");
     valido = false;
-  } else if (campoNome.value.trim().split(/\s+/).length < 2) {
-    setFieldError(campoNome, document.getElementById("erro-nome"), "Informe nome e sobrenome.");
+  } else if (nameInput.value.trim().split(/\s+/).length < 2) {
+    setFieldError(nameInput, document.getElementById("erro-nome"), "Informe nome e sobrenome.");
     valido = false;
   } else {
-    setFieldError(campoNome, document.getElementById("erro-nome"), "");
+    setFieldError(nameInput, document.getElementById("erro-nome"), "");
   }
 
-  if (!campoEmail.value.trim()) {
-    setFieldError(campoEmail, document.getElementById("erro-email"), "Informe seu e-mail.");
+  if (!emailInput.value.trim()) {
+    setFieldError(emailInput, document.getElementById("erro-email"), "Informe seu e-mail.");
     valido = false;
-  } else if (!isValidEmail(campoEmail.value)) {
-    setFieldError(campoEmail, document.getElementById("erro-email"), "Informe um e-mail válido.");
+  } else if (!isValidEmail(emailInput.value)) {
+    setFieldError(emailInput, document.getElementById("erro-email"), "Informe um e-mail válido.");
     valido = false;
   } else {
-    setFieldError(campoEmail, document.getElementById("erro-email"), "");
+    setFieldError(emailInput, document.getElementById("erro-email"), "");
   }
 
-  if (!campoCpf.value.trim()) {
-    setFieldError(campoCpf, document.getElementById("erro-cpf"), "Informe seu CPF.");
+  if (!cpfInput.value.trim()) {
+    setFieldError(cpfInput, document.getElementById("erro-cpf"), "Informe seu CPF.");
     valido = false;
-  } else if (!isValidCPF(campoCpf.value)) {
-    setFieldError(campoCpf, document.getElementById("erro-cpf"), "CPF inválido.");
+  } else if (!isValidCPF(cpfInput.value)) {
+    setFieldError(cpfInput, document.getElementById("erro-cpf"), "CPF inválido.");
     valido = false;
   } else {
-    setFieldError(campoCpf, document.getElementById("erro-cpf"), "");
+    setFieldError(cpfInput, document.getElementById("erro-cpf"), "");
   }
 
-  if (!campoDataNascimento.value) {
-    setFieldError(campoDataNascimento, document.getElementById("erro-data-nascimento"), "Informe sua data de nascimento.");
+  if (!birthdateInput.value) {
+    setFieldError(birthdateInput, document.getElementById("erro-data-nascimento"), "Informe sua data de nascimento.");
     valido = false;
-  } else if (!isAdult(campoDataNascimento.value)) {
-    setFieldError(campoDataNascimento, document.getElementById("erro-data-nascimento"), "Data inválida ou idade mínima não atingida.");
+  } else if (!isAdult(birthdateInput.value)) {
+    setFieldError(birthdateInput, document.getElementById("erro-data-nascimento"), "Data inválida ou idade mínima não atingida.");
     valido = false;
   } else {
-    setFieldError(campoDataNascimento, document.getElementById("erro-data-nascimento"), "");
+    setFieldError(birthdateInput, document.getElementById("erro-data-nascimento"), "");
   }
 
-  if (!campoTelefone.value.trim()) {
-    setFieldError(campoTelefone, document.getElementById("erro-telefone"), "Informe seu telefone.");
+  if (!phoneInput.value.trim()) {
+    setFieldError(phoneInput, document.getElementById("erro-telefone"), "Informe seu telefone.");
     valido = false;
-  } else if (!isValidPhone(campoTelefone.value)) {
-    setFieldError(campoTelefone, document.getElementById("erro-telefone"), "Telefone inválido.");
+  } else if (!isValidPhone(phoneInput.value)) {
+    setFieldError(phoneInput, document.getElementById("erro-telefone"), "Telefone inválido.");
     valido = false;
   } else {
-    setFieldError(campoTelefone, document.getElementById("erro-telefone"), "");
+    setFieldError(phoneInput, document.getElementById("erro-telefone"), "");
   }
 
-  if (!campoSenha.value) {
-    setFieldError(campoSenha, document.getElementById("erro-senha"), "Informe uma senha.");
+  if (!passwordInput.value) {
+    setFieldError(passwordInput, document.getElementById("erro-senha"), "Informe uma senha.");
     valido = false;
-  } else if (campoSenha.value.length < 6) {
-    setFieldError(campoSenha, document.getElementById("erro-senha"), "A senha deve ter ao menos 6 caracteres.");
+  } else if (passwordInput.value.length < 6) {
+    setFieldError(passwordInput, document.getElementById("erro-senha"), "A senha deve ter ao menos 6 caracteres.");
     valido = false;
   } else {
-    setFieldError(campoSenha, document.getElementById("erro-senha"), "");
+    setFieldError(passwordInput, document.getElementById("erro-senha"), "");
   }
 
-  if (!campoConfirmarSenha.value) {
-    setFieldError(campoConfirmarSenha, document.getElementById("erro-confirmar-senha"), "Confirme sua senha.");
+  if (!confirmPasswordInput.value) {
+    setFieldError(confirmPasswordInput, document.getElementById("erro-confirmar-senha"), "Confirme sua senha.");
     valido = false;
-  } else if (campoConfirmarSenha.value !== campoSenha.value) {
-    setFieldError(campoConfirmarSenha, document.getElementById("erro-confirmar-senha"), "As senhas não coincidem.");
+  } else if (confirmPasswordInput.value !== passwordInput.value) {
+    setFieldError(confirmPasswordInput, document.getElementById("erro-confirmar-senha"), "As senhas não coincidem.");
     valido = false;
   } else {
-    setFieldError(campoConfirmarSenha, document.getElementById("erro-confirmar-senha"), "");
+    setFieldError(confirmPasswordInput, document.getElementById("erro-confirmar-senha"), "");
   }
 
   return valido;
 }
 
-formulario.addEventListener("submit", function (event) {
+form.addEventListener("submit", function (event) {
   event.preventDefault();
   clearFeedback();
 
@@ -198,9 +199,9 @@ formulario.addEventListener("submit", function (event) {
     return;
   }
 
-  const botaoEnviar = document.getElementById("botao-cadastrar");
-  botaoEnviar.disabled = true;
-  botaoEnviar.textContent = "Cadastrando...";
+  const submitButton = document.getElementById("botao-cadastrar");
+  submitButton.disabled = true;
+  submitButton.textContent = "Cadastrando...";
 
   setTimeout(function () {
     showFeedback("Cadastro realizado com sucesso! Redirecionando para o login...", "sucesso");
@@ -208,11 +209,11 @@ formulario.addEventListener("submit", function (event) {
     window.localStorage.setItem(
       "bibliosys:lastRegisteredUser",
       JSON.stringify({
-        nome: campoNome.value.trim(),
-        email: campoEmail.value.trim(),
-        cpf: campoCpf.value,
-        dataNascimento: campoDataNascimento.value,
-        telefone: campoTelefone.value,
+        nome: nameInput.value.trim(),
+        email: emailInput.value.trim(),
+        cpf: cpfInput.value,
+        dataNascimento: birthdateInput.value,
+        telefone: phoneInput.value,
         cadastradoEm: new Date().toISOString(),
       })
     );
@@ -227,7 +228,7 @@ document.getElementById("botao-cancelar-cadastro").addEventListener("click", fun
   window.location.href = "index.html";
 });
 
-campos.forEach(function (item) {
+fields.forEach(function (item) {
   item.campo.addEventListener("input", function () {
     if (item.campo.getAttribute("aria-invalid") === "true") {
       setFieldError(item.campo, item.erro, "");
