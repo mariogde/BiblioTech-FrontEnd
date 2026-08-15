@@ -170,8 +170,8 @@ function validate() {
   if (!passwordInput.value) {
     setFieldError(passwordInput, document.getElementById("erro-senha"), "Informe uma senha.");
     valido = false;
-  } else if (passwordInput.value.length < 6) {
-    setFieldError(passwordInput, document.getElementById("erro-senha"), "A senha deve ter ao menos 6 caracteres.");
+  } else if (passwordInput.value.length < 8 || passwordInput.value.length > 15) {
+    setFieldError(passwordInput, document.getElementById("erro-senha"), "A senha deve ter entre 8 e 15 caracteres.");
     valido = false;
   } else {
     setFieldError(passwordInput, document.getElementById("erro-senha"), "");
