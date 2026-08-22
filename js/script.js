@@ -75,7 +75,7 @@ form.addEventListener("submit", function (event) {
     }));
 
     setTimeout(function () {
-      window.location.href = "dashboard.html";
+      window.location.href = "dashboard/dashboard.html";
     }, 800);
   }, 600);
 });
