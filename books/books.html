@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Livros · BiblioTech</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+  <div class="estrutura-app">
+
+    <aside class="barra-lateral">
+      <div class="barra-lateral__logo">
+        <span class="barra-lateral__logo-icone" aria-hidden="true"></span>
+        <span>BiblioTech</span>
+      </div>
+
+      <nav class="barra-lateral__menu" aria-label="Menu principal">
+        <ul>
+          <li><a href="../dashboard/dashboard.html" class="barra-lateral__link">Dashboard</a></li>
+          <li><a href="../renters/renters.html" class="barra-lateral__link">Locatários</a></li>
+          <li><a href="books.html" class="barra-lateral__link barra-lateral__link--submenu barra-lateral__link--ativo">Livros</a></li>
+          <li><a href="../publishers/publishers.html" class="barra-lateral__link barra-lateral__link--submenu">Editoras</a></li>
+          <li><a href="../rentals/rentals.html" class="barra-lateral__link barra-lateral__link--submenu">Aluguéis</a></li>
+        </ul>
+      </nav>
+
+      <button type="button" id="botao-sair" class="barra-lateral__sair">Sair</button>
+    </aside>
+
+    <div class="area-principal">
+      <header class="barra-superior">
+        <div class="barra-superior__idioma-container">
+          <button
+            type="button"
+            id="botao-idioma"
+            class="barra-superior__idioma"
+            aria-haspopup="listbox"
+            aria-expanded="false"
+          >
+            <span id="idioma-selecionado">Português</span>
+          </button>
+
+          <ul id="lista-idiomas" class="barra-superior__idioma-lista" role="listbox" hidden>
+            <li role="option"><button type="button" class="barra-superior__idioma-opcao" data-idioma="Português">Português</button></li>
+            <li role="option"><button type="button" class="barra-superior__idioma-opcao" data-idioma="Espanhol">Espanhol</button></li>
+            <li role="option"><button type="button" class="barra-superior__idioma-opcao" data-idioma="Inglês">Inglês</button></li>
+          </ul>
+        </div>
+
+        <button type="button" id="botao-perfil" class="barra-superior__perfil">
+          <div class="barra-superior__avatar" id="avatar-usuario">?</div>
+          <div class="barra-superior__info">
+            <span class="barra-superior__nome" id="nome-usuario">Usuário</span>
+            <span class="barra-superior__papel">Locatário</span>
+          </div>
+        </button>
+      </header>
+
+      <main class="conteudo">
+
+        <section id="visao-lista" class="visao">
+          <div class="conteudo-cabecalho">
+            <div class="campo-busca">
+              <input 
+                type="search" 
+                id="campo-busca" 
+                class="formulario-campo" 
+                placeholder="Buscar por título ou autor..." 
+              />
+            </div>
+            <button type="button" id="botao-novo-livro" class="botao botao--escuro">Novo Livro</button>
+          </div>
+
+          <div class="tabela-wrapper">
+            <table class="tabela">
+              <thead>
+                <tr>
+                  <th scope="col">Título</th>
+                  <th scope="col">Autor</th>
+                  <th scope="col">Lançamento</th>
+                  <th scope="col">Total</th>
+                  <th scope="col">Em uso</th>
+                  <th scope="col">Editora</th>
+                  <th scope="col"><span class="sr-only">Ações</span></th>
+                </tr>
+              </thead>
+              <tbody id="corpo-tabela-livros">
+                <!-- Linhas geradas dinamicamente via books.js -->
+              </tbody>
+            </table>
+            <p id="tabela-vazia" class="tabela-vazia" hidden>Nenhum livro cadastrado ainda.</p>
+          </div>
+        </section>
+
+        <section id="visao-formulario" class="visao visao--centralizada" hidden>
+          <div class="cartao cartao--largo">
+            <h2 class="cartao__marca" id="titulo-formulario-livro">Cadastrar Livro</h2>
+
+            <div id="retorno-livro" class="retorno" role="alert" aria-live="assertive"></div>
+
+            <form id="formulario-livro" novalidate>
+              <input type="hidden" id="livro-id" value="" />
+
+              <div class="formulario-grupo">
+                <label for="livro-titulo" class="formulario-rotulo">Título</label>
+                <input
+                  type="text"
+                  id="livro-titulo"
+                  name="livro-titulo"
+                  class="formulario-campo"
+                  aria-describedby="erro-livro-titulo"
+                  required
+                />
+                <span id="erro-livro-titulo" class="formulario-erro"></span>
+              </div>
+
+              <div class="formulario-linha">
+                <div class="formulario-grupo">
+                  <label for="livro-autor" class="formulario-rotulo">Autor</label>
+                  <input
+                    type="text"
+                    id="livro-autor"
+                    name="livro-autor"
+                    class="formulario-campo"
+                    aria-describedby="erro-livro-autor"
+                    required
+                  />
+                  <span id="erro-livro-autor" class="formulario-erro"></span>
+                </div>
+
+                <div class="formulario-grupo">
+                  <label for="livro-lancamento" class="formulario-rotulo">Ano de lançamento</label>
+                  <input
+                    type="text"
+                    id="livro-lancamento"
+                    name="livro-lancamento"
+                    class="formulario-campo"
+                    inputmode="numeric"
+                    placeholder="2024"
+                    maxlength="4"
+                    aria-describedby="erro-livro-lancamento"
+                    required
+                  />
+                  <span id="erro-livro-lancamento" class="formulario-erro"></span>
+                </div>
+              </div>
+
+              <div class="formulario-linha">
+                <div class="formulario-grupo">
+                  <label for="livro-total" class="formulario-rotulo">Total de exemplares</label>
+                  <input
+                    type="number"
+                    id="livro-total"
+                    name="livro-total"
+                    class="formulario-campo"
+                    min="0"
+                    step="1"
+                    aria-describedby="erro-livro-total"
+                    required
+                  />
+                  <span id="erro-livro-total" class="formulario-erro"></span>
+                </div>
+
+                <div class="formulario-grupo">
+                  <label for="livro-em-uso" class="formulario-rotulo">Em uso</label>
+                  <input
+                    type="number"
+                    id="livro-em-uso"
+                    name="livro-em-uso"
+                    class="formulario-campo"
+                    min="0"
+                    step="1"
+                    aria-describedby="erro-livro-em-uso"
+                    required
+                  />
+                  <span id="erro-livro-em-uso" class="formulario-erro"></span>
+                </div>
+              </div>
+
+              <div class="formulario-grupo">
+                <label for="livro-editora" class="formulario-rotulo">Editora</label>
+                <select
+                  id="livro-editora"
+                  name="livro-editora"
+                  class="formulario-campo"
+                  aria-describedby="erro-livro-editora"
+                  required
+                >
+                  <option value="">Selecione uma editora</option>
+                </select>
+                <span id="erro-livro-editora" class="formulario-erro"></span>
+              </div>
+
+              <div class="botao-grupo">
+                <button type="button" id="botao-cancelar-livro" class="botao botao--secundario">Cancelar</button>
+                <button type="submit" id="botao-confirmar-livro" class="botao botao--primario">Confirmar</button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+      </main>
+    </div>
+
+  </div>
+
+  <script src="books.js"></script>
+</body>
+</html>

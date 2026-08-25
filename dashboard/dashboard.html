@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard · BiblioTech</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+  <div class="estrutura-app">
+
+    <aside class="barra-lateral">
+      <div class="barra-lateral__logo">
+        <span class="barra-lateral__logo-icone" aria-hidden="true"></span>
+        <span>BiblioTech</span>
+      </div>
+
+      <nav class="barra-lateral__menu" aria-label="Menu principal">
+        <ul>
+          <li><a href="dashboard.html" class="barra-lateral__link barra-lateral__link--ativo">Dashboard</a></li>
+          <li><a href="../renters/renters.html" class="barra-lateral__link">Locatários</a></li>
+          <li><a href="../books/books.html" class="barra-lateral__link barra-lateral__link--submenu">Livros</a></li>
+          <li><a href="../publishers/publishers.html" class="barra-lateral__link barra-lateral__link--submenu">Editoras</a></li>
+          <li><a href="../rentals/rentals.html" class="barra-lateral__link barra-lateral__link--submenu">Aluguéis</a></li>
+        </ul>
+      </nav>
+
+      <button type="button" id="botao-sair" class="barra-lateral__sair">Sair</button>
+    </aside>
+
+    <div class="area-principal">
+      <header class="barra-superior">
+        <div class="barra-superior__idioma-container">
+          <button
+            type="button"
+            id="botao-idioma"
+            class="barra-superior__idioma"
+            aria-haspopup="listbox"
+            aria-expanded="false"
+          >
+            <span id="idioma-selecionado">Português</span>
+          </button>
+
+          <ul id="lista-idiomas" class="barra-superior__idioma-lista" role="listbox" hidden>
+            <li role="option"><button type="button" class="barra-superior__idioma-opcao" data-idioma="Português">Português</button></li>
+            <li role="option"><button type="button" class="barra-superior__idioma-opcao" data-idioma="Espanhol">Espanhol</button></li>
+            <li role="option"><button type="button" class="barra-superior__idioma-opcao" data-idioma="Inglês">Inglês</button></li>
+          </ul>
+        </div>
+
+        <button type="button" id="botao-perfil" class="barra-superior__perfil">
+          <div class="barra-superior__avatar" id="avatar-usuario">?</div>
+          <div class="barra-superior__info">
+            <span class="barra-superior__nome" id="nome-usuario">Usuário</span>
+            <span class="barra-superior__papel">Locatário</span>
+          </div>
+        </button>
+      </header>
+
+      <main class="conteudo" id="conteudo-principal">
+        <h3> Futuramente Dashboard</h3>
+      </main>
+    </div>
+
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>

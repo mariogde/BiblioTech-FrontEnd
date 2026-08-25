@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Entrar · BiblioTech</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="pagina-autenticacao">
+
+  <main class="cartao">
+    <h1 class="cartao__marca">BiblioTech</h1>
+
+    <div id="retorno-login" class="retorno" role="alert" aria-live="assertive"></div>
+
+    <form id="formulario-login" novalidate>
+      <div class="formulario-grupo">
+        <label for="email" class="formulario-rotulo">E-mail</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          class="formulario-campo"
+          autocomplete="username"
+          aria-describedby="erro-email"
+          required
+        />
+        <span id="erro-email" class="formulario-erro"></span>
+      </div>
+
+      <div class="formulario-grupo">
+        <label for="senha" class="formulario-rotulo">Senha</label>
+        <input
+          type="password"
+          id="senha"
+          name="senha"
+          class="formulario-campo"
+          autocomplete="current-password"
+          aria-describedby="erro-senha"
+          required
+        />
+        <span id="erro-senha" class="formulario-erro"></span>
+      </div>
+
+      <button type="submit" id="botao-entrar" class="botao botao--primario botao--bloco">Entrar</button>
+    </form>
+
+    <nav class="cartao__links" aria-label="Ações da conta">
+      <a href="register.html">Cadastre-se agora</a>
+      <a href="forgot-password.html">Esqueci a senha</a>
+    </nav>
+  </main>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
