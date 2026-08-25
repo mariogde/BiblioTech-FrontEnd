@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard · BiblioTech</title>
+  <title>Locatários · BiblioTech</title>
   <link rel="stylesheet" href="../css/style.css" />
 </head>
 <body>
@@ -18,8 +18,8 @@
 
       <nav class="barra-lateral__menu" aria-label="Menu principal">
         <ul>
-          <li><a href="dashboard.html" class="barra-lateral__link barra-lateral__link--ativo">Dashboard</a></li>
-          <li><a href="../renters/renters.html" class="barra-lateral__link">Locatários</a></li>
+          <li><a href="../dashboard/dashboard.html" class="barra-lateral__link">Dashboard</a></li>
+          <li><a href="renters.html" class="barra-lateral__link barra-lateral__link--ativo">Locatários</a></li>
           <li><a href="../books/books.html" class="barra-lateral__link barra-lateral__link--submenu">Livros</a></li>
           <li><a href="../publishers/publishers.html" class="barra-lateral__link barra-lateral__link--submenu">Editoras</a></li>
           <li><a href="../rentals/rentals.html" class="barra-lateral__link barra-lateral__link--submenu">Aluguéis</a></li>
@@ -58,13 +58,42 @@
         </button>
       </header>
 
-      <main class="conteudo" id="conteudo-principal">
-        <h3> Futuramente Dashboard</h3>
+      <main class="conteudo">
+        
+        <section id="visao-lista" class="visao">
+          <div class="conteudo-cabecalho">
+            <div class="campo-busca">
+              <input 
+                type="search" 
+                id="campo-busca" 
+                class="formulario-campo" 
+                placeholder="Buscar editora..." 
+              />
+            </div>
+            <button type="button" id="botao-nova-editora" class="botao botao--escuro">Nova editora</button>
+          </div>
+
+            <table class="tabela">
+              <thead>
+                <tr>
+                  <th scope="col">Nome</th>
+                  <th scope="col">E-mail</th>
+                  <th scope="col">CPF</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody id="corpo-tabela-locatarios">
+                <!-- Linhas geradas dinamicamente via renters.js -->
+              </tbody>
+            </table>
+            <p id="tabela-vazia" class="tabela-vazia" hidden>Nenhum locatário cadastrado ainda.</p>
+          </div>
+        </section>
       </main>
     </div>
 
   </div>
 
-  <script src="dashboard.js"></script>
+  <script src="renters.js"></script>
 </body>
 </html>
